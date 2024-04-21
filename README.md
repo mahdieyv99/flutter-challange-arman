@@ -3,6 +3,8 @@ Task Description
 The volleyball Federation decided to use an online selling platform for the next season, and our company has been chosen for implementing that.
 
 
+Create a Flutter application with two main pages:
+
 **1. Login Page:**
 This page allows users to authenticate themselves into the application. 
 Users should be able to input their credentials, such as username and password, and submit them for validation.
