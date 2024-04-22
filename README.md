@@ -13,7 +13,7 @@ Upon successful authentication, users should be directed to the second page.
 **2. Stadium Seats Page:**
 After successful login, users are directed to this page where they can view the available seats for a stadium event.
 The page should display a layout of seats arranged in rows and columns representing the stadium seating.
-Each seat should be visually distinguishable and display its status (e.g., available, reserved, occupied).
+Each seat should be visually distinguishable and display its status (e.g., available or reserved).
 Users should be able to select seats if they are available. Please refer to the design provided as a sample.
 
 
