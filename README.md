@@ -70,6 +70,10 @@ It is more valuable to us that the project comes with unit tests.
 Don't forget that many stadium seats are available (around 100k) so try to implement your code in a way that could show it smoothly.
 If your solution does not sample enough for implementing fast, you can just describe it in your documents.
 
+### Login Information
+username: arman
+password: 12345
+
 Please fork this repository and add your code to that. Don't forget that your commits are so important.
 So be sure that you're committing your code often with a proper commit message.
 
