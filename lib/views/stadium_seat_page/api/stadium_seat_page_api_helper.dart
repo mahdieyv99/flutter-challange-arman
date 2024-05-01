@@ -1,47 +1,44 @@
 import 'package:dio/dio.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_buy_ticket.dart';
 import '../../../di/di.dart';
-import '../../../model/network/retApi.dart';
+import '../../../model/network/restApi.dart';
 
 class StadiumSeatPageApiHelper {
   final RestClient client = getIt();
 
-  /*Future<ResponseGetMuseums> getMuseums(int page, String token) async {
-    ResponseGetMuseums response = ResponseGetMuseums();
+  Future<ResponseBuyTicket> buyTicket(String? mapId, int x, int y) async {
+    ResponseBuyTicket response = ResponseBuyTicket();
     try {
-      response = await client.getMuseums("Bearer $token", page);
+      response = await client.buyTicket(mapId, x, y);
     } on DioException catch (e) {
-      response = ResponseGetMuseums.fromJson(e.response!.data);
+      response = ResponseBuyTicket.fromJson(e.response!.data);
     } catch (e) {
       response.error = null;
     }
     return response;
   }
 
-  Future<ResponseGetUserLikeGetAll> getUserLikeGetAll(
-      String filter, String token) async {
-    ResponseGetUserLikeGetAll response = ResponseGetUserLikeGetAll();
+  Future<List<String>?> getMap() async {
+    List<String>? response;
     try {
-      response = await client.getUserLikeGetAll("Bearer $token", filter);
+      response = await client.getMap();
     } on DioException catch (e) {
-      response = ResponseGetUserLikeGetAll.fromJson(e.response!.data);
+      response = List<String>.from(e.response!.data);
     } catch (e) {
-      response.error = null;
+      // error block
     }
     return response;
   }
 
-  Future<ResponseGetUserLikeByFilter> getUserLikeByFilter(
-      String filter, String token) async {
-    ResponseGetUserLikeByFilter response = ResponseGetUserLikeByFilter();
+  Future<List<List<int>>?> getSeatAvailableOnMap(String? mapId) async {
+    List<List<int>>? response;
     try {
-      response = await client.getUserLikeByFilter("Bearer $token", filter);
+      response = await client.getSeatAvailableOnMap(mapId);
     } on DioException catch (e) {
-      if (e.response != null) {
-        response = ResponseGetUserLikeByFilter.fromJson(e.response!.data);
-      }
+      response = List<List<int>>.from(e.response!.data.map((e) => List<int>.from(e)));
     } catch (e) {
-      response.error = null;
+      // error block
     }
     return response;
-  }*/
+  }
 }

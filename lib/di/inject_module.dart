@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mahdi_flutter_challenge_arman/model/network/retApi.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/restApi.dart';
 import 'package:mahdi_flutter_challenge_arman/utils/snack_bar_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/utils/string_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/values/languages/StringsManager.dart';

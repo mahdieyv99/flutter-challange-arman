@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i7;
 
 import '../model/database/db_helper_module.dart' as _i3;
-import '../model/network/retApi.dart' as _i6;
+import '../model/network/restApi.dart' as _i6;
 import '../utils/app_version_helper.dart' as _i5;
 import '../utils/sign_in_helper.dart' as _i8;
 import '../utils/snack_bar_helper.dart' as _i9;

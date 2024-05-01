@@ -4,7 +4,7 @@ import '../di/di.dart';
 import '../model/database/db_helper_module.dart';
 import '../model/network/netweok_models/auth/request_sign_in.dart';
 import '../model/network/netweok_models/auth/response_sign_in.dart';
-import '../model/network/retApi.dart';
+import '../model/network/restApi.dart';
 
 class SignInHelper {
   final RestClient client = getIt();
