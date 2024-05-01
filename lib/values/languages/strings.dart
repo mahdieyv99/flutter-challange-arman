@@ -78,4 +78,6 @@ abstract class Strings {
   abstract String cancel;
   abstract String volleyballFederation;
   abstract String chooseSeat;
+  abstract String buyTicket;
+  abstract String ticketReserved;
 }

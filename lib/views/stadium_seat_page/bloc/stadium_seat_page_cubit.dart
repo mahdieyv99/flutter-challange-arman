@@ -1,8 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mahdi_flutter_challenge_arman/di/di.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/auth/request_sign_in.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/auth/response_sign_in.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_get_map.dart';
 import 'package:mahdi_flutter_challenge_arman/utils/string_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/values/languages/StringsManager.dart';
+import 'package:mahdi_flutter_challenge_arman/views/login/api/login_page_api_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/views/stadium_seat_page/api/stadium_seat_page_api_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/views/stadium_seat_page/model/stadium_seat_page_model.dart';
 
@@ -14,9 +18,7 @@ part 'stadium_seat_page_main_state.dart';
 
 class StadiumSeatPageCubit extends Cubit<StadiumSeatPageCubitState> {
   StadiumSeatPageApiHelper apiHelper = getIt();
-  StringHelper stringHelper = getIt();
-  DBHelperModule dbHelperModule = getIt();
-  SignInHelper signInHelper = getIt();
+  LoginPageApiHelper signInHelper = getIt();
 
   late StadiumSeatPageMainModel mainModel;
   bool isNextPageAvailableArtwork = true;
@@ -27,21 +29,10 @@ class StadiumSeatPageCubit extends Cubit<StadiumSeatPageCubitState> {
 
   StadiumSeatPageCubit(BuildContext context) : super(StadiumSeatPageInitialState()) {
     mainModel = StadiumSeatPageMainModel(
-      resultByFilterUserProfileExpansionStatus: [],
-      isLoadingGetArtworks: true,
-      isLoadingGetArtworkUserProfile: false,
+      listMap: [],
+      listSeatAvailableOnMap: [],
       isErrorGetData: false,
-      errorMessage: "",
-      selectedBottomNavigationIndex: 1,
-      currentArtworksIndex: 0,
-      currentPageArtwork: 1,
-      currentPageSearch: 1,
-      isLoadingGetSearch: false,
-      isLoadingGetMoreSearch: false,
-      isLoadingGetMuseum: false,
-      filter: '',
-      searchQuery: '',
-      currentPageMuseum: 1,
+      errorMessage: ''
     );
 
     emitMainPageMainState();
@@ -53,9 +44,9 @@ class StadiumSeatPageCubit extends Cubit<StadiumSeatPageCubitState> {
   }
 
   void init() async {
-    token = await dbHelperModule.getToken();
+    //token = await dbHelperModule.getToken();
 
-    //getArtworks(true);
+    getMap();
   }
 
   // home ------------------------------------------------------------------------------------------------------------
@@ -63,40 +54,37 @@ class StadiumSeatPageCubit extends Cubit<StadiumSeatPageCubitState> {
     mainModel.isErrorGetData = false;
   }
 
-  /*void getMoreMuseums() {
-    if (isNextPageAvailableMuseum) {
-      mainModel.currentPageMuseum += 1;
-      getMuseums();
-    }
-  }
-
-  void setSelectedBottomNavigationIndex(int selectedBottomNavigationIndex) {
-    mainModel.selectedBottomNavigationIndex = selectedBottomNavigationIndex;
-    if (selectedBottomNavigationIndex == 3) {
-      //search("", true);
-    } else if (selectedBottomNavigationIndex == 2) {
-      mainModel.museums!.clear();
-      getMuseums();
-    }
+  Future<void> getMap() async {
     emitMainPageMainState();
-  }*/
+    ResponseGetMap response = await apiHelper.getMap();
 
-  void setExpansionStatus(int index) {
-    print('UserProfileCubit.setExpansionStatus');
-    mainModel.resultByFilterUserProfileExpansionStatus[index] =
-        !mainModel.resultByFilterUserProfileExpansionStatus[index];
-    emitMainPageMainState();
-  }
-
-  int getExpandedCount() {
-    int expandedCount = 0;
-
-    mainModel.resultByFilterUserProfileExpansionStatus.forEach((element) {
-      if (element) {
-        expandedCount++;
+    if (response.list != null) {
+      mainModel.listMap = response.list!;
+      emitMainPageMainState();
+    } else if (response.errCode == 403 && response.error == Constants.errorAccessDenied) {
+      RequestSignIn request = RequestSignIn(username: 'arman', password: '12345');
+      ResponseSignIn signInResponse = await signInHelper.signIn(request);
+      bool isSignInOk = true;
+      if (isSignInOk) {
+        getMap();
       }
-    });
-    print('UserProfileCubit.getExpandedCount $expandedCount');
-    return expandedCount;
+    }
+  }
+
+  Future<void> buyTicket() async {
+    emitMainPageMainState();
+    ResponseGetMap response = await apiHelper.getMap();
+
+    if (response.list != null) {
+      mainModel.listMap = response.list!;
+      emitMainPageMainState();
+    } else if (response.errCode == 403 && response.error == Constants.errorAccessDenied) {
+      RequestSignIn request = RequestSignIn(username: 'arman', password: '12345');
+      ResponseSignIn signInResponse = await signInHelper.signIn(request);
+      bool isSignInOk = true;
+      if (isSignInOk) {
+        getMap();
+      }
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_buy_ticket.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_get_map.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_get_seat_available_on_map.dart';
 import '../../../di/di.dart';
 import '../../../model/network/restApi.dart';
 
@@ -18,26 +20,27 @@ class StadiumSeatPageApiHelper {
     return response;
   }
 
-  Future<List<String>?> getMap() async {
-    List<String>? response;
+  Future<ResponseGetMap> getMap() async {
+    ResponseGetMap response = ResponseGetMap();
     try {
-      response = await client.getMap();
+      response.list = await client.getMap();
     } on DioException catch (e) {
-      response = List<String>.from(e.response!.data);
+      response.error = e.response!.data;
     } catch (e) {
-      // error block
+      response.error = e.toString();
     }
     return response;
   }
 
-  Future<List<List<int>>?> getSeatAvailableOnMap(String? mapId) async {
-    List<List<int>>? response;
+  Future<ResponseGetSeatAvailableOnMap> getSeatAvailableOnMap(String? mapId) async {
+    ResponseGetSeatAvailableOnMap response = ResponseGetSeatAvailableOnMap();
     try {
-      response = await client.getSeatAvailableOnMap(mapId);
+      final response = await client.getSeatAvailableOnMap(mapId);
+      response.list = List<List<int>>.from(response.response!.data.map((e) => List<int>.from(e)));
     } on DioException catch (e) {
-      response = List<List<int>>.from(e.response!.data.map((e) => List<int>.from(e)));
+      response.error = e.response!.data;
     } catch (e) {
-      // error block
+      response.error = e.toString();
     }
     return response;
   }

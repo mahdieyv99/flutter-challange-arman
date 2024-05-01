@@ -96,9 +96,7 @@ class StadiumSeatPageState extends State<StadiumSeatPage>
           return BlocListener<StadiumSeatPageCubit, StadiumSeatPageCubitState>(
               listener: (context, state) {
                 if (state is StadiumSeatPageMainState) {
-                  if (state.mainModel.selectedBottomNavigationIndex == 1) {
-                    isSwipeAvailable = true;
-                  }
+
 
                   if (state.mainModel.isErrorGetData) {
                     ScaffoldMessenger.of(context).showSnackBar(snackBarHelper
@@ -118,9 +116,7 @@ class StadiumSeatPageState extends State<StadiumSeatPage>
                         resizeToAvoidBottomInset: false,
                         body: Stack(children: [
                           StadiumSeatPageHomeView(
-                            onMap: onMap,
-                            getMoreMuseums: () {},
-                            onMuseumTap: () {},
+                            onMap: () {},
                             mainModel: state.mainModel,
                           ),
                         ]))
@@ -152,17 +148,5 @@ class StadiumSeatPageState extends State<StadiumSeatPage>
 
   setAllErrorsToFalse() {
     myContext!.read<StadiumSeatPageCubit>().setAllErrorsToFalse();
-  }
-
-  void onMap() {
-    // todo onMap
-  }
-
-  setExpansionStatusUserProfile(int index) {
-    myContext!.read<StadiumSeatPageCubit>().setExpansionStatus(index);
-  }
-
-  int getExpandedCount() {
-    return myContext!.read<StadiumSeatPageCubit>().getExpandedCount();
   }
 }

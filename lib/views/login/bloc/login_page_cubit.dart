@@ -79,7 +79,6 @@ class LoginPageCubit extends Cubit<LoginPageCubitState> {
   }
 
   void setAllErrorsToFalse() {
-
     mainModel.isError = false;
     mainModel.isSuccessfullySignedIn = false;
     mainModel.isSuccessfullySignedUp = false;

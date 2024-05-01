@@ -158,4 +158,8 @@ class StringsFR extends Strings {
   String volleyballFederation = "Volleyball Federation";
   @override
   String chooseSeat = "Choose Seat";
+  @override
+  String buyTicket = "Buy Ticket";
+  @override
+  String ticketReserved = "Ticket Reserved";
 }

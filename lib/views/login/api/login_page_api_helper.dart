@@ -23,7 +23,6 @@ class LoginPageApiHelper {
       response.error = null;
     }
 
-
     return response;
   }
 }
