@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mahdi_flutter_challenge_arman/di/di.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/auth/request_buy_ticket.dart';
 import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/auth/request_sign_in.dart';
 import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/auth/response_sign_in.dart';
+import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_buy_ticket.dart';
 import 'package:mahdi_flutter_challenge_arman/model/network/netweok_models/stadium_seat_page/response_get_map.dart';
 import 'package:mahdi_flutter_challenge_arman/utils/string_helper.dart';
 import 'package:mahdi_flutter_challenge_arman/values/languages/StringsManager.dart';
@@ -71,20 +73,9 @@ class StadiumSeatPageCubit extends Cubit<StadiumSeatPageCubitState> {
     }
   }
 
-  Future<void> buyTicket() async {
+  Future<void> buyTicket(String? mapId, int x, int y) async {
     emitMainPageMainState();
-    ResponseGetMap response = await apiHelper.getMap();
-
-    if (response.list != null) {
-      mainModel.listMap = response.list!;
-      emitMainPageMainState();
-    } else if (response.errCode == 403 && response.error == Constants.errorAccessDenied) {
-      RequestSignIn request = RequestSignIn(username: 'arman', password: '12345');
-      ResponseSignIn signInResponse = await signInHelper.signIn(request);
-      bool isSignInOk = true;
-      if (isSignInOk) {
-        getMap();
-      }
-    }
+    ResponseBuyTicket response = await apiHelper.buyTicket(mapId, x, y);
+    emitMainPageMainState();
   }
 }
