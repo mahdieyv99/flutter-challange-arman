@@ -4,8 +4,17 @@ import 'package:mahdi_flutter_challenge_arman/values/themes/my_colors.dart';
 class SeatWidget extends StatefulWidget {
   bool isReserved;
   bool isSelected;
+  final int x;
+  final int y;
+  Function(int x, int y) onSelect;
 
-  SeatWidget({Key? key, this.isSelected = false, this.isReserved = false})
+  SeatWidget(
+      {Key? key,
+      this.isSelected = false,
+      this.isReserved = false,
+      required this.x,
+      required this.y,
+      required this.onSelect})
       : super(key: key);
 
   @override
@@ -19,6 +28,7 @@ class _SeatWidgetState extends State<SeatWidget> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
+        widget.onSelect.call(widget.x, widget.y);
         setState(() {
           !widget.isReserved ? widget.isSelected = !widget.isSelected : null;
         });

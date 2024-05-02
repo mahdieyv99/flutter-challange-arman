@@ -17,10 +17,10 @@ class LoginPageApiHelper {
     try {
       response = await client.signIn(request);
     } on DioException catch (e) {
-      response = ResponseSignIn.fromJson(e.response!.data);
+      response.error = e.response!.data;
 
     } catch (e) {
-      response.error = null;
+      response.error = e.toString();
     }
 
     return response;

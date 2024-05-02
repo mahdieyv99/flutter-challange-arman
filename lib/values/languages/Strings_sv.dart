@@ -163,4 +163,6 @@ class StringsSV extends Strings {
   String buyTicket = "Buy Ticket";
   @override
   String ticketReserved = "Ticket Reserved";
+  @override
+  String pleaseSelectYourSeat = "Please Select Your Seat";
 }

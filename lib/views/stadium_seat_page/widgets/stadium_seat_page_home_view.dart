@@ -18,13 +18,11 @@ class StadiumSeatPageHomeView extends StatefulWidget {
   Function() onMap;
   StadiumSeatPageMainModel mainModel;
 
-  StadiumSeatPageHomeView(
-      {required this.onMap,
-      required this.mainModel});
+  StadiumSeatPageHomeView({required this.onMap, required this.mainModel});
 
   @override
-  StadiumSeatPageHomeViewState createState() => StadiumSeatPageHomeViewState(
-      onMap, mainModel);
+  StadiumSeatPageHomeViewState createState() =>
+      StadiumSeatPageHomeViewState(onMap, mainModel);
 }
 
 class StadiumSeatPageHomeViewState extends State<StadiumSeatPageHomeView>
@@ -32,9 +30,9 @@ class StadiumSeatPageHomeViewState extends State<StadiumSeatPageHomeView>
   Function() onMap;
   StadiumSeatPageMainModel mainModel;
   SnackBarHelper snackBarHelper = getIt();
+  int? x, y;
 
-  StadiumSeatPageHomeViewState(
-      this.onMap, this.mainModel);
+  StadiumSeatPageHomeViewState(this.onMap, this.mainModel);
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +126,16 @@ class StadiumSeatPageHomeViewState extends State<StadiumSeatPageHomeView>
               height: 50,
               child: myElevatedButton(
                 onPressed: () {
-                  context.read<StadiumSeatPageCubit>().buyTicket();
-                  ScaffoldMessenger.of(context).showSnackBar(snackBarHelper
-                      .showSuccessSnackBar(StringsManager.strings.ticketReserved));
+                  if (x != null && y != null) {
+                    context.read<StadiumSeatPageCubit>().buyTicket('m213', x!, y!);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        snackBarHelper.showSuccessSnackBar(
+                            StringsManager.strings.ticketReserved));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        snackBarHelper.showSuccessSnackBar(
+                            StringsManager.strings.pleaseSelectYourSeat));
+                  }
                 },
                 backgroundColor: MyColors.white,
                 text: StringsManager.strings.buyTicket.toUpperCase(),
@@ -158,7 +163,16 @@ class StadiumSeatPageHomeViewState extends State<StadiumSeatPageHomeView>
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int j = 0; j < row; j++) Expanded(child: SeatWidget())
+                  for (int j = 0; j < row; j++)
+                    Expanded(
+                        child: SeatWidget(
+                      x: i,
+                      y: j,
+                      onSelect: (x, y) {
+                        this.x = x;
+                        this.y = y;
+                      },
+                    ))
                 ],
               ),
           ],

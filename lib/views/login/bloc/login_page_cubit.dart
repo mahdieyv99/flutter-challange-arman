@@ -54,7 +54,9 @@ class LoginPageCubit extends Cubit<LoginPageCubitState> {
     } else {
       mainModel.isLoading = true;
       mainModel.isError = false;
+
       emitLoginPageMainState();
+
       RequestSignIn request = RequestSignIn(username: username, password: password);
       ResponseSignIn response = await apiHelper.signIn(request);
 

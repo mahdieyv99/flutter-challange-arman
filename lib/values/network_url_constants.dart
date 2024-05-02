@@ -2,7 +2,7 @@
 
 class NetworkURLConstants {
 
-  static const String baseURL = "https://url.com";
+  static const String baseURL = "https://example.com/api/";
 
 }
 

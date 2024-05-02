@@ -80,4 +80,5 @@ abstract class Strings {
   abstract String chooseSeat;
   abstract String buyTicket;
   abstract String ticketReserved;
+  abstract String pleaseSelectYourSeat;
 }
